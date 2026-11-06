@@ -5,9 +5,23 @@
 #   Body, half-lidded eyes (white, pupils looking in, a dark lid line), pink nose, the little
 #   frown, pointed ears (brown, pink inside), stubby arms held out, brown paws.
 # Atlas: Characters_tex/make_atlas.py cat -> T_Villager_Cat.png (column meanings there).
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/villager_cat.py")).read())
+#   exec(open(r"<skills>/blender-game-props/villager_cat.py").read())
 #   build_villager_cat(atlas_path)
-exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/villager_base.py")).read())
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
+exec(open(_skill("blender-game-props/villager_base.py")).read())
 
 PARTS.update({"Eyes": 7, "Ears": 5})
 CAT_CX, CAT_TOP, CAT_SX, CAT_SY = 510, 255, 1.103, 1.158

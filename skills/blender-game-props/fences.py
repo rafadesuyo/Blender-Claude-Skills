@@ -1,6 +1,6 @@
 # Modular, seamless fences in the NewLua stylized farm pack style (gradient atlas, quads only,
 # closed shells). Run inside the pack .blend:
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/fences.py")).read())
+#   exec(open(r"<skills>/blender-game-props/fences.py").read())
 #   build_fences()                 # all, or build_fences(["Picket_White"])
 #
 # CONNECTION RULE (so players can swap fence types on the same spots):
@@ -8,10 +8,24 @@
 #                           Chain segments at x = 0, 2, 4 ... (rotate 90 deg around a post for corners).
 #   SM_Fence_<Name>_Post  = a lone post to close the last segment (place it at the end, x = n * SEG).
 #   Pivot at the start post's base centre, fence runs along +X, front faces -Y, ground at z = 0.
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
 import bpy, bmesh, math, random
 from mathutils import Vector, Matrix
 
-exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/lamp_posts.py")).read())
+exec(open(_skill("blender-game-props/lamp_posts.py")).read())
 
 SEG = 2.0
 # Extra atlas strips added 2026-10-23 in empty space of the second row (v 0.680-0.830):

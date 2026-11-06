@@ -1,12 +1,26 @@
 # Cute fences, set 2 (from Dante's sheet 48: hearts, bows, flowers, stars, clouds...), same rules as
 # fences.py (2 m segment with its post at x = 0, SM_Fence_<Name>_Post closes the run, pivot at the
 # start post base, runs +X, front -Y; quads only, closed shells, gradient atlas; slot 1 = glow).
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/fences2.py")).read())
+#   exec(open(r"<skills>/blender-game-props/fences2.py").read())
 #   build_fences2()                # all, or build_fences2(["Heart_Rail"])
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
 import bpy, bmesh, math, random
 from mathutils import Vector, Matrix
 
-exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/fences.py")).read())
+exec(open(_skill("blender-game-props/fences.py")).read())
 
 PINK = c0(27, 0.86, 0.90)          # rosy rails
 PINK_SOFT = c1(4, 0.80, 0.83)      # pale pink paint

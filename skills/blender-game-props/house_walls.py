@@ -9,8 +9,22 @@
 #   (one repeat every 2.95 m, so a square texture keeps its aspect), v = 0 at the floor .. 1 at the top,
 #   so the full-height wainscot textures fit the wall. Swap a room's walls by setting its slot to
 #   another /gab/HouseSurfaces/Walls/MI_Wall_<Name>.
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/house_walls.py")).read())
+#   exec(open(r"<skills>/blender-game-props/house_walls.py").read())
 #   build_house_v3(out_dir)   # floors + skins into collection BarnRoom, FBX for UEFN
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
 import bpy, bmesh
 
 VERSION = "4"
@@ -127,7 +141,7 @@ def build_house_v3(out_dir=None):
     res = {o.name: [round(d, 2) for d in o.dimensions] for o in made}
     res["panels"] = {r: len(skin_panels(r)) for r in ROOMS}
     if out_dir:
-        exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/blender_helpers.py")).read(), globals())
+        exec(open(_skill("blender-game-props/blender_helpers.py")).read(), globals())
         for o in made:
             export_fbx(o, out_dir + "/" + o.name + ".fbx")
     return res

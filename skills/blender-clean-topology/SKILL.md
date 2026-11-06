@@ -3,6 +3,11 @@ name: blender-clean-topology
 description: Use when a Blender model needs clean, quad topology, when Dante says a mesh "came out weird", has bad topology / n-gons / triangles, needs retopology or remeshing, or is meant to be SOLD (Fab, CGTrader, Sketchfab, itch). Covers quad-first modeling rules, the topo_check report (+ selecting problems), the topo_clean auto-fix, QuadriFlow / voxel remesh for organic meshes and a sellable-asset export checklist. Works through the Blender MCP; pairs with blender-game-props.
 ---
 
+> **Paths:** `<skills>` in this file and in the script comments means the folder that holds the skill
+> folders, i.e. the parent of this skill's base directory (`~/.claude/skills` for a manual install, the
+> plugin's `skills` folder for a plugin install). Swap in the real absolute path when you run
+> `exec(open(...).read())` in `execute_blender_code`. Scripts find their sibling files on their own.
+
 # Clean topology in Blender (Dante's models)
 
 Dante models with Claude through the Blender MCP and wants some models good enough to **sell**.
@@ -13,7 +18,7 @@ export, auto-clean what's left, remesh only organic shapes.**
 Load the scripts (next to this file) inside `execute_blender_code`:
 
 ```python
-D = __import__("os").path.expanduser(r"~/.claude/skills/blender-clean-topology")
+D = r"<skills>/blender-clean-topology"
 for f in ("quad_build.py", "topo_check.py", "topo_clean.py"):
     exec(open(D + "/" + f).read())
 ```

@@ -1,8 +1,8 @@
 # Topology cleanup: fixes what topo_check reports, on a COPY by default (the original is hidden,
 # never deleted).
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-clean-topology/quad_build.py")).read())
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-clean-topology/topo_check.py")).read())
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-clean-topology/topo_clean.py")).read())
+#   exec(open(r"<skills>/blender-clean-topology/quad_build.py").read())
+#   exec(open(r"<skills>/blender-clean-topology/topo_check.py").read())
+#   exec(open(r"<skills>/blender-clean-topology/topo_clean.py").read())
 #   new_obj, before, after = topo_clean(obj)                  # copy "<name>_clean"
 #   topo_clean(obj, in_place=True)                            # only when Dante said so
 #   remesh(obj, "quadriflow", faces=4000)                     # organic shapes only, on a copy

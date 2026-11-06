@@ -3,6 +3,11 @@ name: blender-game-props
 description: Use when making a 3D model / prop / mesh for one of Dante's games (UEFN / Fortnite, Roblox, Unity) through the Blender MCP, or when importing a Blender model into a game project. Covers his low-poly cartoon style, the bmesh build recipe, flat color materials, FBX export settings and the UEFN import and placement steps.
 ---
 
+> **Paths:** `<skills>` in this file and in the script comments means the folder that holds the skill
+> folders, i.e. the parent of this skill's base directory (`~/.claude/skills` for a manual install, the
+> plugin's `skills` folder for a plugin install). Swap in the real absolute path when you run
+> `exec(open(...).read())` in `execute_blender_code`. Scripts find their sibling files on their own.
+
 # Game props in Blender (Dante's projects)
 
 Dante builds bright, cartoony, stylized games (Fortnite UEFN tycoons, Roblox, Unity). Props are made
@@ -39,7 +44,7 @@ game. Follow this recipe so every model matches the game's look and arrives at t
 ## 3. Build with bmesh
 
 Use the helpers in `blender_helpers.py` (next to this file): load them with
-`exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/blender_helpers.py")).read())` inside
+`exec(open(r"<skills>/blender-game-props/blender_helpers.py").read())` inside
 `execute_blender_code`, then:
 
 ```python
@@ -288,3 +293,5 @@ For quad topology, n-gon/tri cleanup, remeshing, or models Dante wants to SELL, 
   neighbouring box top z-fights, so end it in a gap; side stems at yaw 2.1 and 4.3 both land on
   the LEFT in a front view (use ~2.5 and ~5.5); neighbouring petals need different tilts.
   Preview without lights is black: temp sun + ortho camera, then remove them and restore world.
+- 2026-11-04 gab: `quest_booth.py` builds SM_BarnNameSign and SM_QuestBooth. SM_BarnNameSign is a hanging sign in BARN-LOCAL coordinates, so one mesh fits all 9 barn designs. It's placed at the identity transform as a child of the barn entity and stays under the gable decorations. SM_QuestBooth is a thin stall with a notice board, a striped awning and a title board. Textify titles go on top as separate meshes (front +X after import).
+- 2026-11-04 grass (UEFN): `grass/SourceArt/grass_kit.py` = flat-colour low-poly map kit (cottage, picket + wood fences, road, cone, round/pine trees, bushes, flowers, mailbox, bench, step stone, 2 m grass tuft of 3-sided two-tone blades, burlap grass bag). UEFN import gives 3 auto LODs AND per-quality Min LOD 2 on Low/Medium: thin blades vanished and a tree LOD dropped a material section (canopy went brown). For small low-poly kits: StaticMeshToolset.RemoveLods + SetQualityLevelMinLod {Low,Medium,High,Epic: -1} + default 0 (validation only warns). Import axes: Blender +X -> UE -Y, Blender -Y (front) -> UE +X.

@@ -1,0 +1,16 @@
+{
+  "name": "blender-claude-skills",
+  "owner": { "name": "rafadesuyo" },
+  "metadata": {
+    "description": "Blender skills for Claude Code: low-poly game props and clean quad topology."
+  },
+  "plugins": [
+    {
+      "name": "blender-skills",
+      "source": "./",
+      "description": "Low-poly game props and clean quad topology in Blender through the Blender MCP (UEFN / Roblox / Unity).",
+      "version": "1.1.0",
+      "category": "3d"
+    }
+  ]
+}

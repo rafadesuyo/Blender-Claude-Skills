@@ -1,13 +1,27 @@
 # Lamp posts in the NewLua stylized farm pack style (gradient atlas, quads only, closed shells).
 # Run inside the pack .blend:
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/lamp_posts.py")).read())
+#   exec(open(r"<skills>/blender-game-props/lamp_posts.py").read())
 #   build_lamps()
 # Makes SM_LampPost_Wood, SM_LampPost_Roof, SM_LampPost_Halloween in collection LampPosts.
 # Slot 0 = M_GradientTexture (atlas), slot 1 = M_LanternGlow (emissive glass / carved face).
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
 import bpy, bmesh, math, random
 from mathutils import Vector, Matrix
 
-exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/gradient_trees.py")).read())
+exec(open(_skill("blender-game-props/gradient_trees.py")).read())
 
 WOOD = c1(1, 0.69, 0.765)        # orange-brown wood
 WOOD_DARK = c0(35, 0.86, 0.99)

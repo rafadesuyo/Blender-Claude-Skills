@@ -6,12 +6,26 @@
 # glowing globes and gold coin piles. Glowing parts use slot 1 = M_GradientGlow (atlas colours).
 # Pivot: the middle of the stall row on the ground; front -Y; the stalls stand inside y -1..+1.
 # Runs check_closed + zfight (must be 0).
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/premium.py")).read())
+#   exec(open(r"<skills>/blender-game-props/premium.py").read())
 #   build_premium()
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
 import bpy, bmesh, math, random
 from mathutils import Vector, Matrix
 
-exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/barn_set2.py")).read())
+exec(open(_skill("blender-game-props/barn_set2.py")).read())
 
 ROYAL = canopy(5, 1235, 1335)
 ROYAL_DARK = canopy(5, 1130, 1210)

@@ -11,7 +11,7 @@
 # material can move each piece about its own pivot in real time (PART_PIVOTS below):
 #   0 body (bob / squash)  1 left foot  2 right foot  3 left flipper  4 right flipper
 #   5 tuft  6 face (eyes, beak, mouth: they ride the body)
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/villager_base.py")).read())
+#   exec(open(r"<skills>/blender-game-props/villager_base.py").read())
 #   build_villager_base()
 import bpy, bmesh, math, os
 from mathutils import Vector, Matrix

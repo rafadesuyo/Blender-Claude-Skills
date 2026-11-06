@@ -5,7 +5,7 @@
 # ONE material (M_GradientTexture = the gradient atlas, GradientTexture_v3); each part is UV'd into
 # one atlas column (S(row, col, t0, t1)). Every item: pivot at the bottom centre, front -Y.
 # Collections: Decor > Decor_Bedroom / Decor_Bathroom / Decor_LivingRoom / Decor_Kitchen.
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/decor.py")).read())
+#   exec(open(r"<skills>/blender-game-props/decor.py").read())
 #   build_decor()                 # every item; build_decor(["Bedroom"]) for one area
 #   render_decor_previews(dir)    # one framed PNG per item (dir/<area>/<name>.png)
 import bpy, bmesh, math, os, random

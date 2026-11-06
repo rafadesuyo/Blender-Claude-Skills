@@ -3,10 +3,24 @@
 # decor_japanese.py (one atlas material, rounded boxes, lathed round parts, every item closed, pivot at
 # the bottom centre, front -Y). Collections: DecorBrazil > DecorBR_Bathroom / DecorBR_LivingRoom /
 # DecorBR_Bedroom / DecorBR_Kitchen, objects SM_DecorBR_<Name> (rows at y -300 ...).
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/decor_brazil.py")).read())
+#   exec(open(r"<skills>/blender-game-props/decor_brazil.py").read())
 #   build_brazil()                 # every item; build_brazil(["Kitchen"]) for one area
 #   render_brazil_previews(dir)    # one framed PNG per item (dir/<area>/<name>.png)
-exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/decor_japanese.py")).read())
+# --- skill file finder: works for manual installs (~/.claude/skills) and plugin installs ---
+def _skill(rel):
+    import os, glob
+    roots = [os.environ.get("CLAUDE_BLENDER_SKILLS", ""), os.path.expanduser("~/.claude/skills")]
+    roots += sorted(glob.glob(os.path.expanduser("~/.claude/plugins/**/skills"), recursive=True),
+                    key=os.path.getmtime, reverse=True)
+    for r in roots:
+        if r and os.path.exists(os.path.join(r, rel)):
+            os.environ["CLAUDE_BLENDER_SKILLS"] = r   # remember it for the next scripts
+            return os.path.join(r, rel)
+    raise FileNotFoundError("Blender skill file not found: %s (set the CLAUDE_BLENDER_SKILLS env var "
+                            "to the folder that holds blender-game-props)" % rel)
+# --- end skill file finder ---
+
+exec(open(_skill("blender-game-props/decor_japanese.py")).read())
 
 BR_GREEN = S("r1", 13, 0.0, 0.4)
 BR_BLUE = S("r4", 10, 0.0, 0.45)

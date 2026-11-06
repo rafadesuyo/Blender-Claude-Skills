@@ -1,5 +1,5 @@
 # Topology check: counts everything a buyer (or a subdivision modifier) complains about.
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-clean-topology/topo_check.py")).read())
+#   exec(open(r"<skills>/blender-clean-topology/topo_check.py").read())
 #   topo_check(obj, target="quad")       -> dict report (+ "verdict" and "problems" list)
 #   topo_check(obj, select=True)         -> also selects the bad faces/edges/verts in Edit Mode
 #   topo_report(objs, target="game")     -> {name: short report} for several objects

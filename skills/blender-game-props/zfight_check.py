@@ -1,6 +1,6 @@
 # Z-fighting check: finds faces of DIFFERENT parts (islands) of a mesh that lie in the same plane
 # (within TOL) and overlap. Those flicker in game (Dante: "don't let it happen ever").
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/zfight_check.py")).read())
+#   exec(open(r"<skills>/blender-game-props/zfight_check.py").read())
 #   zfight(obj)  -> list of (partA, partB, centre, area); [] = clean
 # Run it on every model before export, next to check_closed.
 import bmesh, math

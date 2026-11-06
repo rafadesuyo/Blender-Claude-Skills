@@ -1,7 +1,7 @@
 # Cute mailbox in the NewLua pack style (gradient atlas, smooth shading, quads, closed shells).
 # Run inside the pack .blend (Blender MCP execute_blender_code):
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/gradient_trees.py")).read())
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/mailbox.py")).read())
+#   exec(open(r"<skills>/blender-game-props/gradient_trees.py").read())
+#   exec(open(r"<skills>/blender-game-props/mailbox.py").read())
 #   build_mailbox()
 # Makes SM_Mailbox in collection Mailbox: an arched red box (door on the front, -Y) with a gold
 # knob, a raised yellow flag on its right side, a love letter peeking out of the door, on a round

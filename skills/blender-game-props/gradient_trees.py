@@ -1,6 +1,6 @@
 # Fruit trees in the NewLua Studios stylized farm pack style (gradient atlas, quads only, smooth).
 # Run inside the pack .blend (Blender MCP execute_blender_code):
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/gradient_trees.py")).read())
+#   exec(open(r"<skills>/blender-game-props/gradient_trees.py").read())
 #   build_trees()                 # all types, or build_trees(["Apple", "Peach"])
 # Each type makes SM_<Type>Tree_Stage1..4 (Stage4 carries the fruit) + the fruit item SM_<Fruit>,
 # in collection Trees > Tree_<Type>, one row per type. The seed (SM_Tree_Seed) is shared.

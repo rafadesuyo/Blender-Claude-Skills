@@ -1,5 +1,5 @@
 # Quad-first building blocks: shapes that are all quads from the start, so nothing needs fixing.
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-clean-topology/quad_build.py")).read())
+#   exec(open(r"<skills>/blender-clean-topology/quad_build.py").read())
 # All functions take/return a bmesh; finish with orient_outward(b) (from topo_clean.py) or
 # bmesh.ops.recalc_face_normals before converting to a mesh.
 import bmesh, math, random

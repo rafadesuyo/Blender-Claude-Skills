@@ -1,0 +1,9 @@
+{
+  "name": "blender-skills",
+  "version": "1.1.0",
+  "description": "Low-poly game props and clean quad topology in Blender through the Blender MCP (UEFN / Roblox / Unity).",
+  "author": { "name": "rafadesuyo" },
+  "homepage": "https://github.com/rafadesuyo/Blender-Claude-Skills",
+  "repository": "https://github.com/rafadesuyo/Blender-Claude-Skills",
+  "keywords": ["blender", "3d", "low-poly", "topology", "uefn", "roblox", "unity"]
+}

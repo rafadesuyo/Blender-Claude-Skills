@@ -1,5 +1,5 @@
 # Helpers for building low-poly game props with bmesh (run inside Blender via the Blender MCP):
-#   exec(open(__import__("os").path.expanduser(r"~/.claude/skills/blender-game-props/blender_helpers.py")).read())
+#   exec(open(r"<skills>/blender-game-props/blender_helpers.py").read())
 import bpy, bmesh, math, os
 from mathutils import Vector, Matrix
 
